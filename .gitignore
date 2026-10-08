@@ -1,0 +1,36 @@
+# Local environments and generated data
+.venv/
+.Rlib/
+cache/
+work/
+outputs/
+.Rhistory
+.RData
+.Rproj.user/
+.DS_Store
+renv/library/
+renv/staging/
+renv/cache/
+__pycache__/
+*.pyc
+*.log
+Rplots.pdf
+# Credentials and local configuration
+.env
+.env.*
+*.env
+*.pem
+*.key
+*.p12
+*.pfx
+credentials*.json
+secrets*.json
+.netrc
+.npmrc
+# Local backups and editor state
+*.bundle
+*.zip
+.idea/
+.vscode/
+.codex/
+.agents/
