@@ -2,7 +2,7 @@ portfolio_stats <- function(w,mu,sigma,rf) {
   r <- sum(w*mu); v <- sqrt(drop(t(w)%*%sigma%*%w))
   c(return=r,volatility=v,sharpe=if(v>0)(r-rf)/v else NA_real_)
 }
-optimize_portfolio <- function(mu,sigma,rf=.02,points=100,allow_short=FALSE) {
+optimize_portfolio <- function(mu,sigma,rf=.02,points=100,allow_short=FALSE,include_rf=TRUE) {
   n <- length(mu)
   bounds <- rep(0,n)
   budget <- 1
@@ -19,10 +19,10 @@ optimize_portfolio <- function(mu,sigma,rf=.02,points=100,allow_short=FALSE) {
       w
     }
     tangent<-NULL;reason<-NULL
-    if(gm>rf) {
+    if(include_rf&&gm>rf) {
       tangent<-if(flat)g else (vm-rf*v1)/(A*(gm-rf))
       if(any(!is.finite(tangent))||abs(sum(tangent)-1)>1e-6)stop('无约束切点权重未通过校验。')
-    } else reason<-if(flat)'所有股票的预期收益相同且不超过无风险利率，没有正斜率切点。' else '允许无限制卖空时，当前参数下最大 Sharpe 只在持仓规模趋于无穷时逼近，没有有限权重的切点组合。'
+    } else if(include_rf)reason<-if(flat)'所有股票的预期收益相同且不超过无风险利率，没有正斜率切点。' else '允许无限制卖空时，当前参数下最大 Sharpe 只在持仓规模趋于无穷时逼近，没有有限权重的切点组合。'
     # This is a plotting window, never a constraint on the optimization.
     span<-max(.1,diff(range(mu)),3*portfolio_stats(g,mu,sigma,rf)['volatility'])
     upper<-if(flat)gm else max(gm+span,if(is.null(tangent))gm else sum(tangent*mu)+span*.1)
@@ -51,12 +51,12 @@ optimize_portfolio <- function(mu,sigma,rf=.02,points=100,allow_short=FALSE) {
   weights <- lapply(targets,at)
   frontier <- as.data.frame(t(vapply(weights,portfolio_stats,numeric(3),mu=mu,sigma=sigma,rf=rf)))
   tangent <- NULL
-  if(upper>rf) {
+  if(include_rf&&upper>rf) {
     if(upper-lower<1e-10)tangent<-g else {
       obj <- function(t) -portfolio_stats(at(t),mu,sigma,rf)['sharpe']
       opt <- optimize(obj,c(lower,upper),tol=1e-10)
       candidates<-c(lower,opt$minimum,upper);tangent<-at(candidates[which.min(vapply(candidates,obj,numeric(1)))])
     }
   }
-  list(gmv=g,tangent=tangent,frontier=frontier,weights=weights,gmv_stats=portfolio_stats(g,mu,sigma,rf),tangent_stats=if(!is.null(tangent))portfolio_stats(tangent,mu,sigma,rf),tangent_reason=if(is.null(tangent))'当前不卖空约束下组合预期收益不超过无风险利率，没有正斜率切点。' else NULL)
+  list(gmv=g,tangent=tangent,frontier=frontier,weights=weights,gmv_stats=portfolio_stats(g,mu,sigma,rf),tangent_stats=if(!is.null(tangent))portfolio_stats(tangent,mu,sigma,rf),tangent_reason=if(include_rf&&is.null(tangent))'当前不卖空约束下组合预期收益不超过无风险利率，没有正斜率切点。' else NULL)
 }
