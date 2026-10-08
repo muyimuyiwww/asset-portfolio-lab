@@ -15,12 +15,14 @@
 
 需要先安装 R 和 Python 3，并让 `Rscript`、`python3` 可以从终端调用。依赖版本记录于 `renv.lock` 和 `requirements.lock`。首次安装需要网络；原开发环境使用 R 4.6.1、Python 3.14。
 
-macOS：双击 `setup.command` 安装项目内依赖，再双击 `启动工具.command`。也可在项目目录执行：
+macOS：在项目目录打开终端，执行以下命令安装依赖并启动：
 
 ```sh
 zsh setup.command
 zsh 启动工具.command
 ```
+
+网页下载的文件可能没有执行权限。若希望以后双击启动，先在项目目录执行 `chmod +x setup.command 启动工具.command`。
 
 浏览器地址为 `http://127.0.0.1:8765`。关闭启动窗口或按 Control+C 停止服务。服务只监听本机。
 
