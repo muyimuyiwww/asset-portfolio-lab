@@ -52,5 +52,14 @@ details[open] summary{margin-bottom:18px}
 @media(max-width:991px){.container-fluid{padding:20px}.well{padding:20px}.card{padding:20px}.col-sm-3,.col-sm-9{width:100%;float:none}.app-header{margin-bottom:22px}}
 @media(max-width:540px){.container-fluid{padding:14px}.app-header h2{font-size:23px}.card-heading{align-items:flex-start}.card{padding:16px}.table{font-size:12px}.table>tbody>tr>td,.table>thead>tr>th{padding:9px}.card-heading .radio-inline{padding:5px 8px}}
 .card .table{width:100%!important}
-.card .table th:not(:first-child),.card .table td:not(:first-child){text-align:right}
-.source-card .table th,.source-card .table td{text-align:left!important}
+.card .table th:not(:first-child),.card .table td:not(:first-child){text-align:right!important}
+.card.source-card .table th,.card.source-card .table td{text-align:left!important}
+.matrix-scroll{overflow-x:auto}
+.matrix-scroll .table{font-size:12px;white-space:nowrap}
+#manual_assets,#manual_matrix{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px}
+#input_mode .radio-inline{font-size:13px}
+#query_controls .shiny-input-container{max-width:480px}
+.card .irs-bar,.card .irs-bar-edge{background:var(--accent);border-color:var(--accent)}
+.card .irs-single{background:var(--accent)}
+
+@media(max-width:540px){#frontier{height:650px!important}}
