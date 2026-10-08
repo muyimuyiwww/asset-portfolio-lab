@@ -7,7 +7,7 @@ shiny::testServer(server,{
  for(method in c('历史均值','指数加权','CAPM')){
   session$setInputs(method=method,calculate=input$calculate+1)
   stopifnot(is.null(error()),nrow(state()$data$x)==12,max(abs(state()$opt$gmv-g))<1e-10)
-  w<-weights();stopifnot(ncol(w)==3,nrow(w)==3,'切点权重（最大 Sharpe）'%in%names(w))
+  w<-weights();stopifnot(ncol(w)==3,nrow(w)==3,'切点（最大 Sharpe）'%in%names(w))
   if(!is.null(state()$opt$tangent))stopifnot(identical(w[[3]],sprintf('%.2f%%',state()$opt$tangent*100)),abs(sum(state()$opt$tangent)-1)<1e-7)
  }
  stopifnot(grepl('短样本',paste(as.character(output$short_sample),collapse=' ')))
