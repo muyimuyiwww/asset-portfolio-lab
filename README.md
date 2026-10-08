@@ -1,6 +1,6 @@
 # 资产组合实验室 / Asset Portfolio Lab
 
-本地运行的 R Shiny 课堂组合工具。支持 A 股、港股和美股，使用人民币简单收益，展示最小方差边界、GMV 和最大 Sharpe 组合。
+本地运行的资产组合可视化。支持 A 股、港股和美股，使用简单收益，展示最小方差边界、GMV 和最大 Sharpe 组合。
 
 ## 功能
 
@@ -74,8 +74,3 @@ RUN_LIVE_TESTS=1 Rscript tests/test_one_year.R
 RUN_LIVE_TESTS=1 Rscript tests/test_live.R
 ```
 
-## 本地数据与隐私
-
-本仓库仅包含源码、依赖版本及测试。环境目录、行情缓存、临时请求、日志、导出结果、个人文件和本地旧提交历史均不随公开版发布。`.gitignore` 排除 `.env` 及常见凭据文件。测试绘图使用固定的合成数据。
-
-不要把 API 密钥、个人数据或本机导出文件提交到仓库；今后新增文件仍需检查。
